@@ -2,7 +2,7 @@
 
 /* eslint-disable */
 // import { request } from 'umi';
-import {request} from "@/.umi/plugin-request/request";
+import { request } from '@/.umi/plugin-request/request';
 
 /** 获取当前的用户 GET /api/currentUser */
 
@@ -23,7 +23,7 @@ export async function outLogin(options) {
 /** 登录接口 POST /api/login/account */
 
 export async function login(body, options) {
-  return request('/api/login/account', {
+  return request('/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -34,13 +34,12 @@ export async function login(body, options) {
 }
 /** 请求发送验证码 **/
 export async function authCode(body) {
-
   return request('/send_auth_code', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: {'mail':body},
+    data: { mail: body },
   });
 }
 /** 提交整个注册表信息，注册然后跳转到主页 **/

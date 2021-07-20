@@ -11,7 +11,7 @@ async function getFakeCaptcha(req, res) {
   return res.json('captcha-xxx');
 }
 
-const {ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION} = process.env;
+const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
 /**
  * 当前用户的权限，如果为空代表没登录
  * current user access， if is '', user need login
@@ -112,33 +112,12 @@ export default {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
-  // ///api/login/register
-  // 'POST /api/login/register': async (req,res)=>{
-  //   res.send({
-  //     status: 'ok',
-  //   });
-  //   return;
-  // },
-  // 'POST /api/login/requestCode': async (req, res) => {
-  //
-  //   const mail = req.body.mail;
-  //   if (mail === '123@gamil.com') {
-  //
-  //     res.send({
-  //       status: 'ok',
-  //     });
-  //     return;
-  //   }
-  //   res.send({
-  //     status: 'error',
-  //   });
-  // },
-  'POST /api/login/account': async (req, res) => {
-    const {password, username, type} = req.body;
+
+  'POST /login': async (req, res) => {
+    const { password, user_name, type } = req.body;
     await waitTime(2000);
 
-    if (password === '123456' && username === 'admin') {
-
+    if (password === '123456' && user_name === 'admin') {
       res.send({
         status: 'ok',
         type,
@@ -148,7 +127,7 @@ export default {
       return;
     }
 
-    if (password === '123456' && username === 'user') {
+    if (password === '123456' && user_name === 'user') {
       res.send({
         status: 'ok',
         type,

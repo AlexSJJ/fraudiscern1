@@ -1,16 +1,13 @@
-import {
-  LockOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import {Alert, message, Tabs} from 'antd';
-import React, {useState} from 'react';
-import ProForm, {ProFormCheckbox, ProFormText} from '@ant-design/pro-form';
-import {useIntl, Link, history, FormattedMessage, SelectLang, useModel} from 'umi';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Alert, message, Tabs } from 'antd';
+import React, { useState } from 'react';
+import ProForm, { ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
-import {login} from '@/services/ant-design-pro/api';
+import { login } from '@/services/ant-design-pro/api';
 import styles from './index.less';
 
-const LoginMessage = ({content}) => (
+const LoginMessage = ({ content }) => (
   <Alert
     style={{
       marginBottom: 24,
@@ -25,8 +22,8 @@ const LoginMessage = ({content}) => (
 const goto = () => {
   if (!history) return;
   setTimeout(() => {
-    const {query} = history.location;
-    const {redirect} = query;
+    const { query } = history.location;
+    const { redirect } = query;
     history.push(redirect || '/');
   }, 10);
 };
@@ -35,24 +32,24 @@ const Login = () => {
   const [submitting, setSubmitting] = useState(false);
   const [userLoginState, setUserLoginState] = useState({});
   const [type, setType] = useState('account');
-  const {initialState, setInitialState} = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
   const intl = useIntl();
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
 
     if (userInfo) {
-      setInitialState({...initialState, currentUser: userInfo});
+      setInitialState({ ...initialState, currentUser: userInfo });
     }
   };
 
   const handleSubmit = async (values) => {
-    console.log(values)
+    console.log(values);
     setSubmitting(true);
 
     try {
       // 登录
-      const msg = await login({...values, type});
+      const msg = await login({ ...values, type });
 
       if (msg.status === 'ok') {
         const defaultloginSuccessMessage = intl.formatMessage({
@@ -77,17 +74,17 @@ const Login = () => {
     setSubmitting(false);
   };
 
-  const {status, type: loginType} = userLoginState;
+  const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.lang} data-lang>
-        {SelectLang && <SelectLang/>}
+        {SelectLang && <SelectLang />}
       </div>
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.header}>
             <Link to="/">
-              <img alt="logo" className={styles.logo} src="%PUBLIC_URL%/logo.svg"/>
+              <img alt="logo" className={styles.logo} src="/logo.svg" />
               <span className={styles.title}>Fraudiscern</span>
             </Link>
           </div>
@@ -131,7 +128,6 @@ const Login = () => {
                   defaultMessage: '账户密码登录',
                 })}
               />
-
             </Tabs>
 
             {status === 'error' && loginType === 'account' && (
@@ -145,10 +141,10 @@ const Login = () => {
             {type === 'account' && (
               <>
                 <ProFormText
-                  name="username"
+                  name="user_name"
                   fieldProps={{
                     size: 'large',
-                    prefix: <UserOutlined className={styles.prefixIcon}/>,
+                    prefix: <UserOutlined className={styles.prefixIcon} />,
                   }}
                   placeholder={intl.formatMessage({
                     id: 'pages.login.username.placeholder',
@@ -170,7 +166,7 @@ const Login = () => {
                   name="password"
                   fieldProps={{
                     size: 'large',
-                    prefix: <LockOutlined className={styles.prefixIcon}/>,
+                    prefix: <LockOutlined className={styles.prefixIcon} />,
                   }}
                   placeholder={intl.formatMessage({
                     id: 'pages.login.password.placeholder',
@@ -196,7 +192,7 @@ const Login = () => {
               }}
             >
               <ProFormCheckbox noStyle name="autoLogin">
-                <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录"/>
+                <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
               </ProFormCheckbox>
             </div>
           </ProForm>
@@ -212,11 +208,11 @@ const Login = () => {
               float: 'left',
             }}
           >
-            <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码"/>
+            <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
           </a>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
